@@ -1,0 +1,65 @@
+from turtle import *
+from collections import deque
+ 
+class Arbre:
+    def __init__(self,value,left=None,right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+         
+    def FaireArbre(self,value,gauche,droit):
+        return Arbre(value,gauche,droit)
+         
+    def EstFeuille(self):
+        return self.left == None and self.right == None
+     
+    def EstArbreVide(self):
+        if self == None:
+            return True
+        return False
+     
+    def Hauteur(self):
+        if self.EstArbreVide() :
+            return -1
+        elif self.estFeuille() :
+            return 0
+        elif self.left == None:
+            return 1 + self.right.Hauteur()
+        elif self.right == None:
+            return 1 + self.left.Hauteur()
+        else :
+            return 1 + max(self.left.Hauteur(),self.right.Hauteur())
+         
+def ParcoursSuffixe(arbre):
+    if arbre!= None:
+        ParcoursSuffixe(arbre.left)
+        ParcoursSuffixe(arbre.right)
+        CercleNombre(25, arbre.value)
+        forward(50)
+         
+def Afficher(arbre):
+    ParcoursSuffixe(arbre)
+    exitonclick()
+ 
+def CercleNombre(radius, val):
+    pendown()
+    circle(radius)
+    penup()
+    left(180)
+    forward(radius/3.571428)
+    right(90)
+    forward(radius/6.25)
+    pendown()
+    write(val, font=("Times New Roman", radius))
+    penup()
+    left(180)
+    forward(radius/6.25)
+    left(90)
+    forward(radius/3.571428)
+     
+     
+     
+     
+     
+     
+arbre=Arbre(5,Arbre(3,Arbre(1),Arbre(2)),Arbre(12,Arbre(7),Arbre(11)))
