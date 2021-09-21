@@ -1,0 +1,29 @@
+# Calcul du pgcd de 2 entiers naturels a et b
+def pgcd(a,b): return a if b==0 else pgcd(b,a%b)
+
+# Calcul de la fraction irrÃ©ductible de a et b
+def irreduc(a,b): d=pgcd(a,b) ; return a//d,b//d
+
+# Calcul de la dÃ©composition d'une fraction a/b en fractions Ã©gyptiennes
+# avec l'algorithme de FIBONACCI-SYLVESTER.
+# Retourne une liste dont le premier Ã©lÃ©ment est la partie entiÃ¨re de a/b
+# suivi des dÃ©nominateurs de la dÃ©composition de la partie fractionnaires en 
+# fractions Ã©gyptiennes.
+def egypt(a,b):    
+    def _egypt(a,b):
+        a1,b1=irreduc(a,b)
+        if a1==1: return [b1]
+        q1=b1//a1+1
+        return [q1]+_egypt(a1*q1-b1,b1*q1)
+    return [a//b]+([] if a%b==0 else _egypt(a%b,b))
+
+if __name__ == '__main__':
+    exemples=[(3,8),(12,7),(5,121)]
+    for a,b in exemples:
+        e=egypt(a,b)
+        res=str(e[0])
+        for i in e[1:]:
+            res+=' + 1/'+str(i)
+        print '%d/%d donne '%(a,b),e
+        print '%d/%d ='%(a,b),res
+        print
